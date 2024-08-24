@@ -30,7 +30,7 @@ describe("Some basic CSS is added.", () => {
         render(<App />);
         const banner = screen.getByRole("banner");
         expect(banner).not.toHaveStyle({
-            "background-color": "rgb(40, 44, 52)"
+            "background-color": "rgb(40, 44, 52)",
         });
     });
 });
@@ -59,6 +59,25 @@ describe("Some Bootstrap Elements are added", () => {
     });
 });
 
-/**
- * Remember, there are additional tasks described on the page!
- */
+describe("Some additional CSS was added", () => {
+    test("checks if any element has a background color of red", () => {
+        const { container } = render(<App />);
+        // Get all elements in the rendered container
+        const elements = container.querySelectorAll("*");
+
+        // Check if any element has a background color of red
+        let foundRedBackground = false;
+
+        elements.forEach((element) => {
+            const style = getComputedStyle(element);
+            if (
+                style.backgroundColor === "red" ||
+                style.backgroundColor === "rgb(255, 0, 0)"
+            ) {
+                foundRedBackground = true;
+            }
+        });
+
+        expect(foundRedBackground).toBe(true);
+    });
+});
