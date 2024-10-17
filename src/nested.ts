@@ -32,6 +32,7 @@ export function findQuestion(
 /**
  * Consumes an array of questions and returns a new array that does not contain the question
  * with the given `id`.
+ * Hint: use filter
  */
 export function removeQuestion(questions: Question[], id: number): Question[] {
     return [];
@@ -40,44 +41,10 @@ export function removeQuestion(questions: Question[], id: number): Question[] {
 /***
  * Consumes an array of questions and returns a new array containing just the names of the
  * questions, as an array.
+ * Do not modify the input array.
  */
 export function getNames(questions: Question[]): string[] {
     return [];
-}
-
-/***
- * Consumes an array of questions and returns the sum total of all their points added together.
- */
-export function sumPoints(questions: Question[]): number {
-    return 0;
-}
-
-/***
- * Consumes an array of questions and returns the sum total of the PUBLISHED questions.
- */
-export function sumPublishedPoints(questions: Question[]): number {
-    return 0;
-}
-
-/***
- * Consumes an array of questions, and produces a Comma-Separated Value (CSV) string representation.
- * A CSV is a type of file frequently used to share tabular data; we will use a single string
- * to represent the entire file. The first line of the file is the headers "id", "name", "options",
- * "points", and "published". The following line contains the value for each question, separated by
- * commas. For the `options` field, use the NUMBER of options.
- *
- * Here is an example of what this will look like (do not include the border).
- *`
-id,name,options,points,published
-1,Addition,0,1,true
-2,Letters,0,1,false
-5,Colors,3,1,true
-9,Shapes,3,2,false
-` *
- * Check the unit tests for more examples!
- */
-export function toCSV(questions: Question[]): string {
-    return "";
 }
 
 /**
@@ -92,23 +59,17 @@ export function makeAnswers(questions: Question[]): Answer[] {
 /***
  * Consumes an array of Questions and produces a new array of questions, where
  * each question is now published, regardless of its previous published status.
+ * Hint: as usual, do not modify the input questions array
  */
 export function publishAll(questions: Question[]): Question[] {
     return [];
 }
 
 /***
- * Consumes an array of Questions and produces whether or not all the questions
- * are the same type. They can be any type, as long as they are all the SAME type.
- */
-export function sameType(questions: Question[]): boolean {
-    return false;
-}
-
-/***
  * Consumes an array of Questions and produces a new array of the same Questions,
  * except that a blank question has been added onto the end. Reuse the `makeBlankQuestion`
  * you defined in the `objects.ts` file.
+ * Hint: as usual, do not modify the input questions array
  */
 export function addNewQuestion(
     questions: Question[],
@@ -123,26 +84,13 @@ export function addNewQuestion(
  * Consumes an array of Questions and produces a new array of Questions, where all
  * the Questions are the same EXCEPT for the one with the given `targetId`. That
  * Question should be the same EXCEPT that its name should now be `newName`.
+ * Hint: as usual, do not modify the input questions array, 
+ *       to make a new copy of a question with some changes, use the ... operator
  */
 export function renameQuestionById(
     questions: Question[],
     targetId: number,
     newName: string
-): Question[] {
-    return [];
-}
-
-/***
- * Consumes an array of Questions and produces a new array of Questions, where all
- * the Questions are the same EXCEPT for the one with the given `targetId`. That
- * Question should be the same EXCEPT that its `type` should now be the `newQuestionType`
- * AND if the `newQuestionType` is no longer "multiple_choice_question" than the `options`
- * must be set to an empty list.
- */
-export function changeQuestionTypeById(
-    questions: Question[],
-    targetId: number,
-    newQuestionType: QuestionType
 ): Question[] {
     return [];
 }
@@ -156,26 +104,14 @@ export function changeQuestionTypeById(
  *
  * Remember, if a function starts getting too complicated, think about how a helper function
  * can make it simpler! Break down complicated tasks into little pieces.
+ * 
+ * Hint: you need to use the ... operator for both the question and the options array
  */
 export function editOption(
     questions: Question[],
     targetId: number,
     targetOptionIndex: number,
     newOption: string
-): Question[] {
-    return [];
-}
-
-/***
- * Consumes an array of questions, and produces a new array based on the original array.
- * The only difference is that the question with id `targetId` should now be duplicated, with
- * the duplicate inserted directly after the original question. Use the `duplicateQuestion`
- * function you defined previously; the `newId` is the parameter to use for the duplicate's ID.
- */
-export function duplicateQuestionInArray(
-    questions: Question[],
-    targetId: number,
-    newId: number
 ): Question[] {
     return [];
 }

@@ -5,17 +5,11 @@ import {
     findQuestion,
     removeQuestion,
     getNames,
-    sumPoints,
-    sumPublishedPoints,
-    toCSV,
     makeAnswers,
     publishAll,
-    sameType,
     addNewQuestion,
     renameQuestionById,
-    changeQuestionTypeById,
     editOption,
-    duplicateQuestionInArray,
 } from "./nested";
 import testQuestionData from "./data/questions.json";
 import backupQuestionData from "./data/questions.json";
@@ -385,53 +379,6 @@ describe("Testing the Question[] functions", () => {
         ]);
     });
 
-    test("(3 pts) Testing the sumPoints function", () => {
-        expect(sumPoints(BLANK_QUESTIONS)).toEqual(3);
-        expect(sumPoints(SIMPLE_QUESTIONS)).toEqual(5);
-        expect(sumPoints(TRIVIA_QUESTIONS)).toEqual(20);
-        expect(sumPoints(EMPTY_QUESTIONS)).toEqual(25);
-        expect(sumPoints(SIMPLE_QUESTIONS_2)).toEqual(300);
-    });
-
-    test("(3 pts) Testing the sumPublishedPoints function", () => {
-        expect(sumPublishedPoints(BLANK_QUESTIONS)).toEqual(0);
-        expect(sumPublishedPoints(SIMPLE_QUESTIONS)).toEqual(2);
-        expect(sumPublishedPoints(TRIVIA_QUESTIONS)).toEqual(0);
-        expect(sumPublishedPoints(EMPTY_QUESTIONS)).toEqual(20);
-        expect(sumPublishedPoints(SIMPLE_QUESTIONS_2)).toEqual(300);
-    });
-
-    test("(3 pts) Testing the toCSV function", () => {
-        expect(toCSV(BLANK_QUESTIONS)).toEqual(`id,name,options,points,published
-1,Question 1,0,1,false
-47,My New Question,0,1,false
-2,Question 2,0,1,false`);
-        expect(toCSV(SIMPLE_QUESTIONS))
-            .toEqual(`id,name,options,points,published
-1,Addition,0,1,true
-2,Letters,0,1,false
-5,Colors,3,1,true
-9,Shapes,3,2,false`);
-        expect(toCSV(TRIVIA_QUESTIONS))
-            .toEqual(`id,name,options,points,published
-1,Mascot,3,7,false
-2,Motto,3,3,false
-3,Goats,3,10,false`);
-        expect(toCSV(EMPTY_QUESTIONS)).toEqual(`id,name,options,points,published
-1,Empty 1,3,5,true
-2,Empty 2,6,5,true
-3,Empty 3,0,5,true
-4,Empty 4,0,5,true
-5,Empty 5 (Actual),0,5,false`);
-        expect(toCSV(SIMPLE_QUESTIONS_2))
-            .toEqual(`id,name,options,points,published
-478,Students,0,53,true
-1937,Importance,0,47,true
-479,Sentience,0,40,true
-777,Danger,0,60,true
-1937,Listening,0,100,true`);
-    });
-
     test("(3 pts) Testing the makeAnswers function", () => {
         expect(makeAnswers(BLANK_QUESTIONS)).toEqual([
             { questionId: 1, correct: false, text: "", submitted: false },
@@ -635,15 +582,6 @@ describe("Testing the Question[] functions", () => {
         expect(publishAll(SIMPLE_QUESTIONS_2)).toEqual(SIMPLE_QUESTIONS_2);
     });
 
-    test("(3 pts) Testing the sameType function", () => {
-        expect(sameType([])).toEqual(true);
-        expect(sameType(BLANK_QUESTIONS)).toEqual(false);
-        expect(sameType(SIMPLE_QUESTIONS)).toEqual(false);
-        expect(sameType(TRIVIA_QUESTIONS)).toEqual(true);
-        expect(sameType(EMPTY_QUESTIONS)).toEqual(false);
-        expect(sameType(SIMPLE_QUESTIONS_2)).toEqual(true);
-    });
-
     test("(3 pts) Testing the addNewQuestion function", () => {
         expect(
             addNewQuestion([], 142, "A new question", "short_answer_question"),
@@ -772,130 +710,6 @@ describe("Testing the Question[] functions", () => {
                 options: ["square", "triangle", "circle"],
                 expected: "circle",
                 points: 2,
-                published: false,
-            },
-        ]);
-    });
-
-    test("(3 pts) Test the changeQuestionTypeById function", () => {
-        expect(
-            changeQuestionTypeById(
-                BLANK_QUESTIONS,
-                1,
-                "multiple_choice_question",
-            ),
-        ).toEqual(BLANK_QUESTIONS);
-        expect(
-            changeQuestionTypeById(BLANK_QUESTIONS, 1, "short_answer_question"),
-        ).toEqual([
-            {
-                id: 1,
-                name: "Question 1",
-                body: "",
-                type: "short_answer_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-            {
-                id: 47,
-                name: "My New Question",
-                body: "",
-                type: "multiple_choice_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-            {
-                id: 2,
-                name: "Question 2",
-                body: "",
-                type: "short_answer_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-        ]);
-        expect(
-            changeQuestionTypeById(
-                BLANK_QUESTIONS,
-                47,
-                "short_answer_question",
-            ),
-        ).toEqual([
-            {
-                id: 1,
-                name: "Question 1",
-                body: "",
-                type: "multiple_choice_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-            {
-                id: 47,
-                name: "My New Question",
-                body: "",
-                type: "short_answer_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-            {
-                id: 2,
-                name: "Question 2",
-                body: "",
-                type: "short_answer_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-        ]);
-        expect(
-            changeQuestionTypeById(
-                TRIVIA_QUESTIONS,
-                3,
-                "short_answer_question",
-            ),
-        ).toEqual([
-            {
-                id: 1,
-                name: "Mascot",
-                body: "What is the name of the UD Mascot?",
-                type: "multiple_choice_question",
-                options: ["Bluey", "YoUDee", "Charles the Wonder Dog"],
-                expected: "YoUDee",
-                points: 7,
-                published: false,
-            },
-            {
-                id: 2,
-                name: "Motto",
-                body: "What is the University of Delaware's motto?",
-                type: "multiple_choice_question",
-                options: [
-                    "Knowledge is the light of the mind",
-                    "Just U Do it",
-                    "Nothing, what's the motto with you?",
-                ],
-                expected: "Knowledge is the light of the mind",
-                points: 3,
-                published: false,
-            },
-            {
-                id: 3,
-                name: "Goats",
-                body: "How many goats are there usually on the Green?",
-                type: "short_answer_question",
-                options: [],
-                expected: "Two",
-                points: 10,
                 published: false,
             },
         ]);
@@ -1090,147 +904,6 @@ describe("Testing the Question[] functions", () => {
                 options: ["square", "triangle", "circle"],
                 expected: "circle",
                 points: 2,
-                published: false,
-            },
-        ]);
-    });
-
-    test("(3 pts) Testing the duplicateQuestionInArray function", () => {
-        expect(duplicateQuestionInArray(BLANK_QUESTIONS, 1, 27)).toEqual([
-            {
-                id: 1,
-                name: "Question 1",
-                body: "",
-                type: "multiple_choice_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-            {
-                id: 27,
-                name: "Copy of Question 1",
-                body: "",
-                type: "multiple_choice_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-            {
-                id: 47,
-                name: "My New Question",
-                body: "",
-                type: "multiple_choice_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-            {
-                id: 2,
-                name: "Question 2",
-                body: "",
-                type: "short_answer_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-        ]);
-        expect(duplicateQuestionInArray(BLANK_QUESTIONS, 47, 19)).toEqual([
-            {
-                id: 1,
-                name: "Question 1",
-                body: "",
-                type: "multiple_choice_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-            {
-                id: 47,
-                name: "My New Question",
-                body: "",
-                type: "multiple_choice_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-            {
-                id: 19,
-                name: "Copy of My New Question",
-                body: "",
-                type: "multiple_choice_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-            {
-                id: 2,
-                name: "Question 2",
-                body: "",
-                type: "short_answer_question",
-                options: [],
-                expected: "",
-                points: 1,
-                published: false,
-            },
-        ]);
-        expect(duplicateQuestionInArray(TRIVIA_QUESTIONS, 3, 111)).toEqual([
-            {
-                id: 1,
-                name: "Mascot",
-                body: "What is the name of the UD Mascot?",
-                type: "multiple_choice_question",
-                options: ["Bluey", "YoUDee", "Charles the Wonder Dog"],
-                expected: "YoUDee",
-                points: 7,
-                published: false,
-            },
-            {
-                id: 2,
-                name: "Motto",
-                body: "What is the University of Delaware's motto?",
-                type: "multiple_choice_question",
-                options: [
-                    "Knowledge is the light of the mind",
-                    "Just U Do it",
-                    "Nothing, what's the motto with you?",
-                ],
-                expected: "Knowledge is the light of the mind",
-                points: 3,
-                published: false,
-            },
-            {
-                id: 3,
-                name: "Goats",
-                body: "How many goats are there usually on the Green?",
-                type: "multiple_choice_question",
-                options: [
-                    "Zero, why would there be goats on the green?",
-                    "18420",
-                    "Two",
-                ],
-                expected: "Two",
-                points: 10,
-                published: false,
-            },
-            {
-                id: 111,
-                name: "Copy of Goats",
-                body: "How many goats are there usually on the Green?",
-                type: "multiple_choice_question",
-                options: [
-                    "Zero, why would there be goats on the green?",
-                    "18420",
-                    "Two",
-                ],
-                expected: "Two",
-                points: 10,
                 published: false,
             },
         ]);
