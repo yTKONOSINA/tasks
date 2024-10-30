@@ -159,7 +159,7 @@ export function addNewQuestion(
     id: number,
     name: string,
     type: QuestionType,
-    type: QuestionType,
+    //type: QuestionType,
 ): Question[] {
     const blank: Question = makeBlankQuestion(id, name, type);
     return [...qs, blank];
