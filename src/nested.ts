@@ -39,6 +39,7 @@ export function findQuestion(qs: Question[], id: number): Question | null {
 /**
  * Consumes an array of questions and returns a new array that does not contain the question
  * with the given `id`.
+ * Hint: use filter
  */
 export function removeQuestion(qs: Question[], id: number): Question[] {
     let removed: Question[] = qs.filter((m) => m.id != id);
@@ -48,6 +49,7 @@ export function removeQuestion(qs: Question[], id: number): Question[] {
 /***
  * Consumes an array of questions and returns a new array containing just the names of the
  * questions, as an array.
+ * Do not modify the input array.
  */
 export function getNames(qs: Question[]): string[] {
     let names: string[] = qs.map((q: Question): string => q.name);
@@ -117,6 +119,7 @@ export function makeAnswers(qs: Question[]): Answer[] {
 /***
  * Consumes an array of Questions and produces a new array of questions, where
  * each question is now published, regardless of its previous published status.
+ * Hint: as usual, do not modify the input questions array
  */
 export function publishAll(qs: Question[]): Question[] {
     let allPub: Question[] = qs.map((q) => ({
@@ -149,11 +152,13 @@ export function sameType(qs: Question[]): boolean {
  * Consumes an array of Questions and produces a new array of the same Questions,
  * except that a blank question has been added onto the end. Reuse the `makeBlankQuestion`
  * you defined in the `objects.ts` file.
+ * Hint: as usual, do not modify the input questions array
  */
 export function addNewQuestion(
     qs: Question[],
     id: number,
     name: string,
+    type: QuestionType,
     type: QuestionType,
 ): Question[] {
     const blank: Question = makeBlankQuestion(id, name, type);
@@ -164,6 +169,8 @@ export function addNewQuestion(
  * Consumes an array of Questions and produces a new array of Questions, where all
  * the Questions are the same EXCEPT for the one with the given `targetId`. That
  * Question should be the same EXCEPT that its name should now be `newName`.
+ * Hint: as usual, do not modify the input questions array,
+ *       to make a new copy of a question with some changes, use the ... operator
  */
 export function renameQuestionById(
     qs: Question[],
@@ -206,6 +213,8 @@ export function changeQuestionTypeById(
  *
  * Remember, if a function starts getting too complicated, think about how a helper function
  * can make it simpler! Break down complicated tasks into little pieces.
+ *
+ * Hint: you need to use the ... operator for both the question and the options array
  */
 export function editOption(
     qs: Question[],
