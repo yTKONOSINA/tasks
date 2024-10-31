@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
  * Returns a random integer between 1 and 6.
  */
 export function d6(): number {
-    return 1 + Math.floor(Math.random() * 6);
+    return Math.floor(Math.random() * 6) + 1;
 }
 
 export function TwoDice(): React.JSX.Element {

@@ -24,7 +24,7 @@ export function extractDigits(element: HTMLElement): number | null {
 }
 
 describe("TwoDice Component tests", () => {
-    let mathRandomFunction: jest.SpyInstance;
+    let mathRandomFunction: jest.SpyInstance; // eslint-disable-line
     beforeEach(() => {
         mathRandomFunction = jest
             .spyOn(global.Math, "random")
