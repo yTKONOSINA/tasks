@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 
+// Array of people to choose from
 const PEOPLE = [
     "Alan Turing",
     "Grace Hopper",
@@ -11,21 +12,18 @@ const PEOPLE = [
 ];
 
 export function ChooseTeam(): React.JSX.Element {
-    const [allOptions, setAllOptions] = useState<string[]>(PEOPLE);
     const [team, setTeam] = useState<string[]>([]);
 
-    function chooseMember() {
-        /*
+    // Function to handle adding a member to the team
+    function chooseMember(newMember: string) {
         if (!team.includes(newMember)) {
-            team.push(newMember);
+            setTeam((prevTeam) => [...prevTeam, newMember]);
         }
-        */
     }
 
+    // Function to clear the team
     function clearTeam() {
-        /*
-        team = [];
-        */
+        setTeam([]); // Reset the team to an empty array
     }
 
     return (
@@ -33,10 +31,15 @@ export function ChooseTeam(): React.JSX.Element {
             <h3>Choose Team</h3>
             <Row>
                 <Col>
-                    {allOptions.map((option: string) => (
+                    {PEOPLE.map((option: string) => (
                         <div key={option} style={{ marginBottom: "4px" }}>
-                            Add{" "}
-                            <Button onClick={chooseMember} size="sm">
+                            Add {/* Fix the arrow function with braces */}
+                            <Button
+                                onClick={() => {
+                                    chooseMember(option); // Explicit function body with braces
+                                }}
+                                size="sm"
+                            >
                                 {option}
                             </Button>
                         </div>
@@ -44,10 +47,18 @@ export function ChooseTeam(): React.JSX.Element {
                 </Col>
                 <Col>
                     <strong>Team:</strong>
-                    {team.map((member: string) => (
-                        <li key={member}>{member}</li>
-                    ))}
-                    <Button onClick={clearTeam}>Clear Team</Button>
+                    <ul>
+                        {team.map((member: string) => (
+                            <li key={member}>{member}</li>
+                        ))}
+                    </ul>
+                    <Button
+                        onClick={() => {
+                            clearTeam(); // Explicit function body with braces
+                        }}
+                    >
+                        Clear Team
+                    </Button>
                 </Col>
             </Row>
         </div>
